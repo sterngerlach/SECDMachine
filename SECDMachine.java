@@ -9,12 +9,18 @@ import java.util.stream.Collectors;
 
 public class SECDMachine
 {
-    private final BaseAST mAPObject = new APObject();
-    private final SECDEntry mInitialDump = new SECDEntry();
+    private final APObject mAPObject;
+    private final SECDEntry mInitialDump;
     private SECDEntry mSECD;
     
     public SECDMachine()
     {
+        this.mAPObject = new APObject();
+        this.mInitialDump = new SECDEntry();
+        this.mInitialDump.mStack = new ArrayList<>();
+        this.mInitialDump.mEnvironment = new ArrayList<>();
+        this.mInitialDump.mControl = new ArrayList<>();
+        this.mInitialDump.mDump = new ArrayList<>();
     }
     
     public <T> void execute(BaseAST expressionAST, Consumer<String> stringBuilder)
@@ -246,8 +252,18 @@ public class SECDMachine
             stringBuilder.accept(this.mSECD.toString() + System.lineSeparator());
             
             // Done
-            if (controlEmpty && this.mSECD.mControl.isEmpty())
+            if (this.mSECD.mControl.isEmpty() &&
+                this.isInitialDump())
                 break;
         }
+    }
+    
+    private boolean isInitialDump()
+    {
+        return
+            this.mSECD.mDump.get(0).mStack.size() == 0 &&
+            this.mSECD.mDump.get(0).mEnvironment.size() == 0 && 
+            this.mSECD.mDump.get(0).mControl.size() == 0 && 
+            this.mSECD.mDump.get(0).mDump.size() == 0;
     }
 }
