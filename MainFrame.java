@@ -58,7 +58,7 @@ public class MainFrame extends JFrame
         this.mPanelCenter.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         this.getContentPane().add(this.mPanelCenter, BorderLayout.CENTER);
         
-        Font textBoxFont = new Font("Consolas", Font.PLAIN, 14);
+        Font textBoxFont = new Font(Font.MONOSPACED, Font.PLAIN, 14);
         
         GridBagConstraints layoutConstraints = new GridBagConstraints();
         layoutConstraints.anchor = GridBagConstraints.WEST;
